@@ -1,0 +1,56 @@
+[project]
+name = "avro2arrow"
+dynamic = ["version"]
+description = "Convert Avro records into Arrow format"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [
+  {name = "Julien Peloton", email = "peloton@ijclab.in2p3.fr"},
+]
+maintainers = [
+  {name = "Julien Peloton", email = "peloton@ijclab.in2p3.fr"}
+]
+requires-python = ">=3.11"
+dependencies = [
+    "rich-click>=1.9.7",
+    "fastavro>=1.9.4,<2.0.0",
+    "numpy>=1.23.5",
+    "pandas>=1.3.5",
+    "pyarrow>=9.0.0",
+    "polars>=1.44.2",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+dev = [
+    "coverage",
+    "coveralls",
+    "ruff",
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "avro2arrow.__version__"}
+
+[project.scripts]
+finkctl = "avro2arrow.scripts.av2ar:cli"
+
+[project.urls]
+Homepage = "https://github.com/JulienPeloton/avro2arrow"
+Repository = "https://github.com/JulienPeloton/avro2arrow"
+Issues = "https://github.com/JulienPeloton/avro2arrow/issues"
+Changelog = "https://github.com/JulienPeloton/avro2arrow/releases"
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--doctest-modules"

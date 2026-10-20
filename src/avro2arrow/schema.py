@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import json
-import sys
 from pathlib import PosixPath
 
 import fastavro
@@ -21,12 +20,11 @@ import requests
 from requests.exceptions import RequestException
 
 from avro2arrow.logger import init_logger
-from avro2arrow.utils import data_path
 
 _LOG = init_logger("Fink", "WARNING")
 
 
-def _get_alert_schema(schema_path: str, timeout: int = 1) -> dict:
+def _get_alert_schema(schema_path: str | PosixPath, timeout: int = 1) -> dict:
     """Returns schema for decoding Fink avro alerts
 
     Notes
@@ -49,12 +47,12 @@ def _get_alert_schema(schema_path: str, timeout: int = 1) -> dict:
     Examples
     --------
     # Custom schema
-    >>> schema = _get_alert_schema(data_path / "ztf/avro_schema_ftransfer_ztf_2026-03-23_11487.json")
+    >>> schema = _get_alert_schema(os.path.join(data_path, "ztf/avro_schema_ftransfer_ztf_2026-03-23_11487.json"))
     >>> print(type(schema))
     <class 'dict'>
 
     # Custom schema
-    >>> schema = _get_alert_schema(data_path / "lsst/avro_schema_ftransfer_lsst_2026-03-18_803281.json")
+    >>> schema = _get_alert_schema(os.path.join(data_path, "lsst/avro_schema_ftransfer_lsst_2026-03-18_803281.json"))
     >>> print(type(schema))
     <class 'dict'>
 
@@ -71,7 +69,7 @@ def _get_alert_schema(schema_path: str, timeout: int = 1) -> dict:
     OSError: `schema_path` must be a non-empty string (path to a avsc file).
     """
     if (schema_path == "") or not (isinstance(schema_path, (str, PosixPath))):
-        msg = f"""
+        msg = """
         `schema_path` must be a non-empty string (path to a avsc file)."""
         raise OSError(msg)
 
@@ -92,4 +90,3 @@ def _get_alert_schema(schema_path: str, timeout: int = 1) -> dict:
             schema = json.load(f)
 
     return fastavro.parse_schema(schema)
-

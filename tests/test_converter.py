@@ -62,6 +62,12 @@ def test_schema_converter(schema):
     arrow_schema = avro_schema_to_arrow_schema(avro_schema)
     assert isinstance(arrow_schema, pa.Schema)
 
+def test_wrong_schema_converter():
+    """Root schema must be a record type"""
+    avro_schema = {"type": None}
+    with pytest.raises(ValueError):
+        avro_schema_to_arrow_schema(avro_schema)
+
 
 @pytest.mark.parametrize(
     ("avro_type", "expected"),

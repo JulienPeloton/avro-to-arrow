@@ -18,14 +18,12 @@ dependencies = [
     "numpy>=1.23.5",
     "pandas>=1.3.5",
     "pyarrow>=9.0.0",
-    "polars>=1.44.2",
-    "tqdm",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "coverage",
-    "coveralls",
+    "pytest",
+    "pytest-cov",
     "ruff",
 ]
 
@@ -53,4 +51,3 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--doctest-modules"

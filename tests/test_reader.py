@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
+
 import pytest
 
 from avro_to_arrow.reader import AvroReader
@@ -78,6 +79,7 @@ def test_pandas():
     r = AvroReader(data_path)
     df = r.to_pandas()
     assert "objectId" in df.columns
+
 
 def test_wrong_extension():
     with pytest.raises(OSError):

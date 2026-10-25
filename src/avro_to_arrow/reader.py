@@ -60,7 +60,9 @@ class AvroReader:
         elif path == "":
             print("WARNING: path to avro files is empty")
             self.filenames = []
-        elif os.path.isfile(path) and (fastavro.is_avro(path) or path.endswith("avro.gz")):
+        elif os.path.isfile(path) and (
+            fastavro.is_avro(path) or path.endswith("avro.gz")
+        ):
             self.filenames = [path]
         else:
             msg = f"""

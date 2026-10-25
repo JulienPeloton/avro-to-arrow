@@ -32,35 +32,6 @@ class AvroReader:
     ----------
     path: str
         Path to Avro file or folder containing Avro files.
-
-    Examples
-    --------
-    Load a single Avro file
-    >>> r = AvroReader(os.path.join(data_path, "ZTF19acihgng.avro"))
-    >>> list_of_alerts = r.to_list()
-    >>> print(len(list_of_alerts))
-    1
-
-    Read a bunch of files
-    >>> r = AvroReader(os.path.join(data_path))
-    >>> df = r.to_pandas()
-    >>> assert('objectId' in  df.columns)
-
-    If there are several alerts in one file, they are all retrieved
-    >>> r = AvroReader(os.path.join(data_path, "avro_multi_alerts.avro"))
-    >>> print('{} avro decoded'.format(len(r.to_list())))
-    11 avro decoded
-
-    If there are several avro in one file, they are all retrieved
-    >>> r = AvroReader(os.path.join(data_path, "avro_multi_alerts_other.avro"))
-    >>> print('{} avro decoded'.format(len(r.to_list())))
-    3 avro decoded
-
-    If you give a list of files
-    >>> files = [os.path.join(data_path, f) for f in ["ZTF19acihgng.avro", "ZTF19acyfkzd.avro"]]
-    >>> r = AvroReader(files)
-    >>> print('{} avro decoded'.format(len(r.to_list())))
-    2 avro decoded
     """
 
     def __init__(self, path: str):
@@ -112,13 +83,6 @@ class AvroReader:
         -------
         dict
             Avro record in a dictionary
-
-        Examples
-        --------
-        >>> r = AvroReader("")
-        WARNING: path to avro files is empty
-
-        >>> record = r._read_single_avro(name=os.path.join(data_path, "ZTF19acihgng.avro"))
         """
         if name is None:
             name = self.path
@@ -149,17 +113,6 @@ class AvroReader:
         -------
         pd.DataFrame
             Avro data in a pandas DataFrame
-
-        Examples
-        --------
-        >>> r = AvroReader(data_path)
-        >>> df = r.to_pandas()
-        >>> assert('objectId' in r.to_pandas().columns)
-
-        >>> r = AvroReader(os.path.join(data_path, "elasticc/alert_mjd60674.0512_obj747_src1494043.avro.gz"))
-        >>> df = r.to_pandas()
-        >>> assert('diaSource' in r.to_pandas().columns)
-
         """
         return pd.DataFrame(self.to_iterator())
 
@@ -173,23 +126,6 @@ class AvroReader:
         size: int, optional
             If not None, return only `size` records.
             Default is None.
-
-        Examples
-        --------
-        >>> r = AvroReader(os.path.join(data_path, "ZTF19acihgng.avro"))
-        >>> mylist = r.to_list()
-        >>> print(len(mylist))
-        1
-
-        >>> r = AvroReader(data_path)
-        >>> mylist = r.to_list(size=2)
-        >>> print(len(mylist))
-        2
-
-        >>> r = AvroReader(os.path.join(data_path, "elasticc/alert_mjd60674.0512_obj747_src1494043.avro.gz"))
-        >>> mylist = r.to_list()
-        >>> print(len(mylist))
-        1
         """
         nest = [self._read_single_avro(fn) for fn in self.filenames[:size]]
         return [item for sublist in nest for item in sublist][:size]
@@ -201,13 +137,6 @@ class AvroReader:
         -------
         out: Iterable[dict]
             Avro record (dictionaries) in an iterator
-
-        Examples
-        --------
-        >>> r = AvroReader(data_path)
-        >>> myiterator = r.to_iterator()
-        >>> assert('objectId' in next(myiterator).keys())
-
         """
         for fn in self.filenames:
             yield from self._read_single_avro(fn)

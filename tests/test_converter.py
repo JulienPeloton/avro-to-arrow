@@ -17,9 +17,9 @@ import os
 import pyarrow as pa
 import pytest
 
+from avro_to_arrow import avro_to_arrow
 from avro_to_arrow.converter import (
     avro_schema_to_arrow_schema,
-    avro_to_arrow,
     avro_type_to_arrow_type,
 )
 from avro_to_arrow.reader import AvroReader

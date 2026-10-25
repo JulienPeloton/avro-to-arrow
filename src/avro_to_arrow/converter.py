@@ -12,13 +12,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Main avro2arrow utilities"""
+"""Main avro_to_arrow utilities"""
 
 from typing import Any
 
 import pyarrow as pa
 
-from avro2arrow.logger import init_logger
+from avro_to_arrow.logger import init_logger
 
 _LOG = init_logger("Fink", "WARNING")
 
@@ -41,8 +41,8 @@ def avro_to_arrow(avro_schema: dict[str, Any], records: list[dict[str, Any]]):
     Examples
     --------
     Convert ZTF Avro records
-    >>> from avro2arrow.schema import _get_alert_schema
-    >>> from avro2arrow.reader import AvroReader
+    >>> from avro_to_arrow.schema import _get_alert_schema
+    >>> from avro_to_arrow.reader import AvroReader
     >>> records = AvroReader(os.path.join(data_path, "ztf/part-3-305711.avro")).to_list()
     >>> avro_schema = _get_alert_schema(os.path.join(data_path, "ztf/avro_schema_ftransfer_ztf_2026-03-23_11487.json"))
     >>> table, arrow_schema = avro_to_arrow(avro_schema, records)

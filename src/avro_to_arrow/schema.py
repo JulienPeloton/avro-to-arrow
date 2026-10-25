@@ -19,7 +19,7 @@ import fastavro
 import requests
 from requests.exceptions import RequestException
 
-from avro2arrow.logger import init_logger
+from avro_to_arrow.logger import init_logger
 
 _LOG = init_logger("Fink", "WARNING")
 
@@ -43,30 +43,6 @@ def _get_alert_schema(schema_path: str | PosixPath, timeout: int = 1) -> dict:
     -------
     parsed_schema: dict
         Dictionary of json format schema for decoding avro alerts from Fink
-
-    Examples
-    --------
-    # Custom schema
-    >>> schema = _get_alert_schema(os.path.join(data_path, "ztf/avro_schema_ftransfer_ztf_2026-03-23_11487.json"))
-    >>> print(type(schema))
-    <class 'dict'>
-
-    # Custom schema
-    >>> schema = _get_alert_schema(os.path.join(data_path, "lsst/avro_schema_ftransfer_lsst_2026-03-18_803281.json"))
-    >>> print(type(schema))
-    <class 'dict'>
-
-    # From URL
-    >>> url = "https://raw.githubusercontent.com/astrolabsoftware/fink-client/refs/heads/master/schemas/distribution_schema_fink_ztf_2.5_3.5.3.avsc"
-    >>> schema = _get_alert_schema(url)
-    >>> print(type(schema))
-    <class 'dict'>
-
-    Raise error in case of non valid schema path
-    >>> schema = _get_alert_schema('') # doctest: +NORMALIZE_WHITESPACE, +ELLIPSIS
-    Traceback (most recent call last):
-     ...
-    OSError: `schema_path` must be a non-empty string (path to a avsc file).
     """
     if (schema_path == "") or not (isinstance(schema_path, (str, PosixPath))):
         msg = """

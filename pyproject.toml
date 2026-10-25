@@ -1,5 +1,5 @@
 [project]
-name = "avro2arrow"
+name = "avro_to_arrow"
 dynamic = ["version"]
 description = "Convert Avro records into Arrow format"
 readme = "README.md"
@@ -30,16 +30,16 @@ dev = [
 ]
 
 [tool.setuptools.dynamic]
-version = {attr = "avro2arrow.__version__"}
+version = {attr = "avro_to_arrow.__version__"}
 
 [project.scripts]
-finkctl = "avro2arrow.scripts.av2ar:cli"
+finkctl = "avro_to_arrow.scripts.av2ar:cli"
 
 [project.urls]
-Homepage = "https://github.com/JulienPeloton/avro2arrow"
-Repository = "https://github.com/JulienPeloton/avro2arrow"
-Issues = "https://github.com/JulienPeloton/avro2arrow/issues"
-Changelog = "https://github.com/JulienPeloton/avro2arrow/releases"
+Homepage = "https://github.com/JulienPeloton/avro_to_arrow"
+Repository = "https://github.com/JulienPeloton/avro_to_arrow"
+Issues = "https://github.com/JulienPeloton/avro_to_arrow/issues"
+Changelog = "https://github.com/JulienPeloton/avro_to_arrow/releases"
 
 [build-system]
 requires = ["flit_core<4"]

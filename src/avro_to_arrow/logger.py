@@ -31,11 +31,6 @@ def init_logger(name: str = "av2ar", log_level: str = "INFO") -> Logger:
     -------
     logger : logging.Logger
         Python Logger
-
-    Examples
-    --------
-    >>> log = init_logger(__name__, "INFO")
-    >>> log.info("Hi!")
     """
     # Format of the log message to be printed
     FORMAT = "%(asctime)-15s %(levelname)s %(message)s"

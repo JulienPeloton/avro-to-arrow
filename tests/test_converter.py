@@ -23,7 +23,7 @@ from avro_to_arrow.converter import (
     avro_type_to_arrow_type,
 )
 from avro_to_arrow.reader import AvroReader
-from avro_to_arrow.schema import _get_alert_schema
+from avro_to_arrow.schema import decode_avro_schema
 from avro_to_arrow.utils import data_path
 
 
@@ -43,7 +43,7 @@ from avro_to_arrow.utils import data_path
 def test_converter(avro, schema):
     """Convert Avro records into arrow table"""
     records = AvroReader(os.path.join(data_path, avro)).to_list()
-    avro_schema = _get_alert_schema(os.path.join(data_path, schema))
+    avro_schema = decode_avro_schema(os.path.join(data_path, schema))
     table, arrow_schema = avro_to_arrow(avro_schema, records)
     assert isinstance(table, pa.Table)
     assert isinstance(arrow_schema, pa.Schema)
@@ -58,7 +58,7 @@ def test_converter(avro, schema):
 )
 def test_schema_converter(schema):
     """Convert Avro schema into arrow schema"""
-    avro_schema = _get_alert_schema(os.path.join(data_path, schema))
+    avro_schema = decode_avro_schema(os.path.join(data_path, schema))
     arrow_schema = avro_schema_to_arrow_schema(avro_schema)
     assert isinstance(arrow_schema, pa.Schema)
 

@@ -16,13 +16,13 @@ import os
 
 import pytest
 
-from avro_to_arrow.schema import _get_alert_schema
+from avro_to_arrow.schema import decode_avro_schema
 from avro_to_arrow.utils import data_path
 
 
 def test_ztf():
     """Test ZTF avro schema"""
-    schema = _get_alert_schema(
+    schema = decode_avro_schema(
         os.path.join(data_path, "ztf/avro_schema_ftransfer_ztf_2026-03-23_11487.json")
     )
     assert isinstance(schema, dict)
@@ -30,7 +30,7 @@ def test_ztf():
 
 def test_lsst():
     """Test LSST avro schema"""
-    schema = _get_alert_schema(
+    schema = decode_avro_schema(
         os.path.join(
             data_path, "lsst/avro_schema_ftransfer_lsst_2026-03-18_803281.json"
         )
@@ -41,11 +41,11 @@ def test_lsst():
 def test_url_schema():
     """Test remote schema decoding"""
     url = "https://raw.githubusercontent.com/astrolabsoftware/fink-client/refs/heads/master/schemas/distribution_schema_fink_ztf_2.5_3.5.3.avsc"
-    schema = _get_alert_schema(url)
+    schema = decode_avro_schema(url)
     assert isinstance(schema, dict)
 
 
 def test_oserror():
     """Raise error in case of non valid schema path"""
     with pytest.raises(OSError):
-        _get_alert_schema("")
+        decode_avro_schema("")

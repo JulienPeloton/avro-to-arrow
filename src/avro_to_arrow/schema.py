@@ -24,8 +24,8 @@ from avro_to_arrow.logger import init_logger
 _LOG = init_logger("Fink", "WARNING")
 
 
-def _get_alert_schema(schema_path: str | PosixPath, timeout: int = 1) -> dict:
-    """Returns schema for decoding Fink avro alerts
+def decode_avro_schema(schema_path: str | PosixPath, timeout: int = 1) -> dict:
+    """Returns Avro schema from path
 
     Notes
     -----
@@ -42,7 +42,7 @@ def _get_alert_schema(schema_path: str | PosixPath, timeout: int = 1) -> dict:
     Returns
     -------
     parsed_schema: dict
-        Dictionary of json format schema for decoding avro alerts from Fink
+        Dictionary of json format schema for decoding Avro records
     """
     if (schema_path == "") or not (isinstance(schema_path, (str, PosixPath))):
         msg = """

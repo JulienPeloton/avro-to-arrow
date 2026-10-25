@@ -37,20 +37,6 @@ def avro_to_arrow(avro_schema: dict[str, Any], records: list[dict[str, Any]]):
     -------
     out: PyArrow Table
     out: PyArrow Schema
-
-    Examples
-    --------
-    Convert ZTF Avro records
-    >>> from avro_to_arrow.schema import _get_alert_schema
-    >>> from avro_to_arrow.reader import AvroReader
-    >>> records = AvroReader(os.path.join(data_path, "ztf/part-3-305711.avro")).to_list()
-    >>> avro_schema = _get_alert_schema(os.path.join(data_path, "ztf/avro_schema_ftransfer_ztf_2026-03-23_11487.json"))
-    >>> table, arrow_schema = avro_to_arrow(avro_schema, records)
-
-    Convert LSST Avro records
-    >>> records = AvroReader(os.path.join(data_path, "lsst/part-2-918301.avro")).to_list()
-    >>> avro_schema = _get_alert_schema(os.path.join(data_path, "lsst/avro_schema_ftransfer_lsst_2026-03-18_803281.json"))
-    >>> table, arrow_schema = avro_to_arrow(avro_schema, records)
     """
     # Step 1: Convert Avro schema to Arrow schema
     arrow_schema = avro_schema_to_arrow_schema(avro_schema)
@@ -74,18 +60,6 @@ def avro_schema_to_arrow_schema(avro_schema: dict[str, Any]) -> pa.Schema:
     -------
     out: pa.Schema
         PyArrow schema
-
-    Examples
-    --------
-    Convert ZTF Avro schema
-    >>> from fink_client.avro_utils import _get_alert_schema
-    >>> avro_schema = _get_alert_schema(os.path.join(data_path, "ztf/avro_schema_ftransfer_ztf_2026-03-23_11487.json"))
-    >>> arrow_schema = avro_schema_to_arrow_schema(avro_schema)
-
-    Convert LSST Avro records
-    >>> from fink_client.avro_utils import _get_alert_schema
-    >>> avro_schema = _get_alert_schema(os.path.join(data_path, "lsst/avro_schema_ftransfer_lsst_2026-03-18_803281.json"))
-    >>> arrow_schema = avro_schema_to_arrow_schema(avro_schema)
     """
     if avro_schema.get("type") == "record":
         fields = []

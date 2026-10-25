@@ -20,6 +20,7 @@ from collections.abc import Iterable
 import fastavro
 import pandas as pd
 from fastavro import reader
+from line_profiler import profile
 
 
 class AvroReader:
@@ -72,6 +73,7 @@ class AvroReader:
             """
             raise OSError(msg)
 
+    @profile
     def _read_single_avro(self, name: str | None = None) -> dict:
         """Read an avro record, and return data as dictionary
 
@@ -108,6 +110,7 @@ class AvroReader:
                 data.append(record)  # noqa: PERF402
         return data
 
+    @profile
     def to_pandas(self) -> pd.DataFrame:
         """Read Avro file(s) and return data as Pandas DataFrame
 
@@ -118,6 +121,7 @@ class AvroReader:
         """
         return pd.DataFrame(self.to_iterator())
 
+    @profile
     def to_list(self, size: int | None = None) -> list:
         """Read Avro file(s) and return data as list of dictionary
 

@@ -17,12 +17,14 @@
 from typing import Any
 
 import pyarrow as pa
+from line_profiler import profile
 
 from avro_to_arrow.logger import init_logger
 
 _LOG = init_logger("Fink", "WARNING")
 
 
+@profile
 def avro_to_arrow(avro_schema: dict[str, Any], records: list[dict[str, Any]]):
     """Convert Avro records to an Arrow table.
 
@@ -149,6 +151,7 @@ def avro_type_to_arrow_type(avro_type: Any) -> pa.DataType:
     raise ValueError(f"Cannot convert Avro type: {avro_type}")
 
 
+@profile
 def transform_records(
     avro_schema: dict[str, Any], records: list[dict[str, Any]]
 ) -> dict[str, list[Any]]:
@@ -186,6 +189,7 @@ def transform_records(
     return arrow_data
 
 
+@profile
 def transform_value(value: Any, avro_type: Any) -> Any:
     """Transform a single Avro value to Arrow-compatible format.
 

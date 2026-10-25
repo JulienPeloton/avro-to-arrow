@@ -17,11 +17,10 @@ import gzip
 import os
 from collections.abc import Iterable
 
-from line_profiler import profile
-
 import fastavro
 import pandas as pd
 from fastavro import reader
+from line_profiler import profile
 
 
 class AvroReader:

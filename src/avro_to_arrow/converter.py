@@ -15,13 +15,14 @@
 """Main avro_to_arrow utilities"""
 
 from typing import Any
-from line_profiler import profile
 
 import pyarrow as pa
+from line_profiler import profile
 
 from avro_to_arrow.logger import init_logger
 
 _LOG = init_logger("Fink", "WARNING")
+
 
 @profile
 def avro_to_arrow(avro_schema: dict[str, Any], records: list[dict[str, Any]]):
@@ -71,6 +72,7 @@ def avro_schema_to_arrow_schema(avro_schema: dict[str, Any]) -> pa.Schema:
         return pa.schema(fields)
     else:
         raise ValueError("Root schema must be a record type")
+
 
 def avro_type_to_arrow_type(avro_type: Any) -> pa.DataType:
     """Convert a single Avro type to PyArrow type.

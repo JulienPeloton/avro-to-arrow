@@ -44,6 +44,13 @@ Note that the conversion is done per Avro records, and appended to a pyarrow tab
 | ZTF (v4.01) | 20 ms/avro |
 | LSST (v11) | 150 ms/avro | 
 
+This test has been performed using a simple [line_profiler](https://github.com/pyutils/line_profiler). You can reproduce it using:
+
+```bash
+cd profiling
+./profile.sh
+```
+
 ## To-do
 
 - [ ] Vectorize `transform_records`/`transform_value`

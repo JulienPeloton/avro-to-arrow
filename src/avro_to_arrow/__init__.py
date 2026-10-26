@@ -16,4 +16,4 @@ from .converter import avro_to_arrow
 
 __all__ = ["avro_to_arrow"]
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"

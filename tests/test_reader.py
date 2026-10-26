@@ -30,9 +30,9 @@ def test_single_avro():
 def test_multiple_files():
     """Read a bunch of files"""
     r = AvroReader(os.path.join(data_path))
-    df = r.to_pandas()
-    assert "objectId" in df.columns
-    assert len(df) == 18, len(df)
+    records = r.to_list()
+    assert "objectId" in records[0]
+    assert len(records) == 18, len(records)
 
 
 def test_multiple_avro_records():
@@ -73,12 +73,6 @@ def test_iterator():
     r = AvroReader(data_path)
     myiterator = r.to_iterator()
     assert "objectId" in next(myiterator)
-
-
-def test_pandas():
-    r = AvroReader(data_path)
-    df = r.to_pandas()
-    assert "objectId" in df.columns
 
 
 def test_wrong_extension():

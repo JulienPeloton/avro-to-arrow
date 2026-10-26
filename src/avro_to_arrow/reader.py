@@ -18,7 +18,6 @@ import os
 from collections.abc import Iterable
 
 import fastavro
-import pandas as pd
 from fastavro import reader
 from line_profiler import profile
 
@@ -109,17 +108,6 @@ class AvroReader:
             for record in avro_reader:
                 data.append(record)  # noqa: PERF402
         return data
-
-    @profile
-    def to_pandas(self) -> pd.DataFrame:
-        """Read Avro file(s) and return data as Pandas DataFrame
-
-        Returns
-        -------
-        pd.DataFrame
-            Avro data in a pandas DataFrame
-        """
-        return pd.DataFrame(self.to_iterator())
 
     @profile
     def to_list(self, size: int | None = None) -> list:
